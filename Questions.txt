@@ -1,0 +1,32 @@
+/*
+    * Check if an integer inputted is a palindrome
+    * if n is a palindrome, n is the same read forwards as backwards
+    * e.g., 123 is not a palindrome because 123 != 321
+    * however 123321 is a palindrome because 123321 == 123321
+    * if n is palindrome, return true, else return false
+    * it can be assumed that n > 0
+    */
+public static boolean isPalindrome(int n) {
+    boolean result = false;
+    return result;
+}
+
+/*
+    *Sort a given integer array from least to greatest
+    *return the sorted array
+    *it can be assumed that arr.length > 0
+    */
+public static int[] getSorted(int[] arr) {
+    int[] result = null;
+    return result;
+}
+
+/*
+    * Given an integer array, find the integers from 1 to a given integer n
+    * (inclusively) which are not included in the integer array.
+    * return an integer array that contains the missing integers.
+    */
+public static int[] findMissing(int[] arr, int n) {
+    int[] result = null;
+    return result;
+}

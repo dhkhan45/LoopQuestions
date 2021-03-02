@@ -1,0 +1,173 @@
+/*
+    * Check if an integer inputted is a palindrome
+    * if n is a palindrome, n is the same read forwards as backwards
+    * e.g., 123 is not a palindrome because 123 != 321
+    * however 123321 is a palindrome because 123321 == 123321
+    * if n is palindrome, return true, else return false
+    * it can be assumed that n > 0
+    */
+public static boolean isPalindrome(int n) {
+    boolean result = false; // initialize result
+    int reverse = 0; // initialize integer that will hold reverse of n
+    
+    /*
+        * go through every digit of n
+        * i is initialized as n
+        * i is divided by 10 and rounded down by Java to drop the last digit for every iteration
+        *loop ends when i is rounded down to 0
+        */
+    for(int i = n; i > 0; i /= 10) {
+        int lastDigit = i % 10; // get the last digit of i
+        
+        /*
+            * multiply reverse by 10 and add the last digit to it
+            * e.g., suppose n=123
+            * Iteration 1: i=123, reverse = 0, therefore reverse = 0*10 + i%10 = 0 + 123%10 = 0+3 = 3
+            * Iteration 2: i=123/10=12, reverse = 3, therefore reverse = 3*10 + i%10 = 30 + 12%10 = 30+2 = 32
+            * Iteration 2: i=12/10=1, reverse = 32, therefore reverse = 32*10 + i%10 = 320 + 1%10 = 320+1 = 321
+            * Iteration 4: i=1/10=0 so i is no longer more than 0 and so the body of the loop does not run
+            */
+        reverse = reverse*10 + lastDigit; 
+    }
+    
+    // check if reverse is equal to the inputted integer and assign the boolean expression to result
+    result = reverse==n;
+    
+    return result;
+}
+
+/*
+    *Sort a given integer array from least to greatest
+    *return the sorted array
+    *it can be assumed that arr.length > 0
+    */
+public static int[] getSorted(int[] arr) {
+    int[] result = null;
+    result = new int[arr.length]; // initialize result to hold an array of the same size as arr
+    
+    // go through arr and copy its contents into result
+    for(int i = 0; i < arr.length; i++) {
+        result[i] = arr[i];
+    }
+    
+    // go through the elements of result to sort it
+    for(int i = 0; i < result.length; i++) {
+        // for every element "i" of result, check if there are any elements "j" AFTER result[i] which are smaller than result[i] 
+        for(int j = i+1; j < result.length; j++) {
+            if(result[i] > result[j]) { // if such elements exist, swap their place with result[i]
+                //the following is a series of steps to swap two variables
+                int temp = result[i]; //assign result[i] to a temporary variable
+                result[i] = result[j];//assign result[i] to the result[j] found to be smaller
+                result[j] = temp;//assign the value of the temporary variable, which holds the previous value of result[i], to result[j]
+            }
+        }
+    }
+    //checking if there is an element after some result[i] and swapping places with it if it is smaller, for every i in result sorts the entire array
+    return result;
+}
+
+/*
+    * Sort a given integer array from least to greatest AND remove any duplicates
+    * return the sorted array WHICH DOES NOT HAVE DUPLICATES
+    * it can be assumed that arr.length > 0
+    */
+public static int[] removeDuplicates(int[] arr) {
+    int[] result = null;
+    
+    //Create a sorted version of arr using our solution to the previous function
+    int[] sorted = new int[arr.length];
+    
+    for(int i = 0; i < arr.length; i++) {
+        sorted[i] = arr[i];
+    }
+    
+    for(int i = 0; i < sorted.length; i++) {
+        for(int j = i+1; j < sorted.length; j++) {
+            if(sorted[i] > sorted[j]) {
+                int temp = sorted[i];
+                sorted[i] = sorted[j];
+                sorted[j] = temp;
+            }
+        }
+    }
+    
+    
+    int counter = 0;// initialize a counter to count duplicates
+    //go through the sorted array (i<sorted.length-1 because we will be checking sorted[i+1] in the loop and must stay in range)
+    for(int i = 0; i < sorted.length-1; i++) {
+        //since the array is sorted, we can find duplicates by looking for the next element and checking if they are equal
+        //this is why it is essential that we sorted the given array first (to make finding duplicates simpler)
+        if(sorted[i] == sorted[i+1]) {
+            counter++; // if duplicates are found, the counter is incremented
+        }
+    }
+    
+    //set the size of the result to arr.length minus the number of duplicates
+    result = new int[sorted.length - counter];
+    result[0] = sorted[0]; // initialize the first element of result so we can compare it to the next
+    counter = 1; // re-initialize counter as 1 to reuse it in the following iteration
+    for(int i = 0; i < sorted.length-1; i++) {
+        //checking if sorted[i+1] is NOT a duplicate
+        if(sorted[i] != sorted[i+1]) {
+            /*
+                * this time, instead of incrementing the counter for every duplicate
+                * we increment it every time sorted[i+1] is NOT a duplicate
+                * we then assign sorted[i+1] to result[counter] and THEN counter is incremented
+                */
+            result[counter] = sorted[i+1];
+            counter++;
+        }
+    }
+    //result now holds only non duplicates in a sorted array
+    return result;
+}
+
+/*
+    * Given an integer array, find the integers from 1 to a given integer n
+    * (inclusively) which are not included in the integer array.
+    * return an integer array that contains the missing integers.
+    */
+public static int[] findMissing(int[] arr, int n) {
+    int[] result = null;
+    int counter = 0; // initialize counter as 0 to count the number of missing numbers
+    // go through every integer "i" from 1 to n
+    for(int i = 1; i <= n; i++) {
+        //set inArray to false for every iteration
+        boolean inArray = false;
+        //go through every element in the array to see if integer i is in it
+        for(int j = 0; j < arr.length; j++) {
+            // if the integer is in the array, inArray is true and this integer is not a missing value
+            if(arr[j] == i) {
+                inArray=true;
+            }
+        }
+        
+        // increment the counter every time inArray remained false (meaning i was not found in the array)
+        if(!inArray) {
+            counter++;
+        }
+    }
+    
+    //set the size of result to the number of missing integers
+    result = new int[counter];
+    counter = 0; //re-initialize counter as 0 for re use
+    
+    //this for loop is the EXACT same as the one we used to increment the counter
+    // the only difference is we also assign the missing integer i in result[counter] if it is missing from arr
+    for(int i = 1; i <= n; i++) {
+        boolean inArray = false;
+        for(int j = 0; j < arr.length; j++) {
+            if(arr[j] == i) {
+                inArray=true;
+            }
+        }
+        
+        if(!inArray) {
+            result[counter] = i;//IMPORTANT: assign i to result[counter] BEFORE incrementing counter to not skip elements
+            counter++;
+        }
+    }
+    
+    //return array of missing elements
+    return result;
+}
