@@ -20,6 +20,15 @@ public static int[] getSorted(int[] arr) {
     int[] result = null;
     return result;
 }
+/*
+	    * Sort a given integer array from least to greatest AND remove any duplicates
+	    * return the sorted array WHICH DOES NOT HAVE DUPLICATES
+	    * it can be assumed that arr.length > 0
+	    */
+public static int[] removeDuplicates(int[] arr) {
+     int[] result = null;
+     return result;
+}
 
 /*
     * Given an integer array, find the integers from 1 to a given integer n
